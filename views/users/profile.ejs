@@ -1,74 +1,73 @@
 <%- include("../partials/header.ejs") %>
 
-<div class="centered"
-<% if (message) { %>
-  <p><%= message %></p>
-<% } %>
-</div>
-
-<form method="POST" action="/users/profile?_method=PUT">
-  <input type="hidden" name="_method" value="PUT" />
-  <% for (let i = 0; i < templates.length; i++) { %>
-    <div>
-      <label>
-        <input type="checkbox" name="userSelectedTemplates" id="templates" value="<%= templates[i] %>"
-          <% if (selectedTemplates.includes(templates[i])) { %>checked<% } %>
-        >
-        <%= templates[i] %>
-      </label>
-    </div>
-  <% } %>
-  <button type="submit">Save Templates</button>
-</form>
-
-
-<div class="centered">
-  <img src="<%= user.img ? user.img : "/images/default.png" %>" style="max-width: 200px; height: auto;"/>
-</div>
-
-<div class="centered">
-<form method="POST" action="/users/profile?_method=PUT" class="entryForm">
-  <label class="uploadSpacerTop">Profile Pic:</label>
-  <input type="hidden" role="uploadcare-uploader" data-public-key="fa1bbb7a33229765419d" name="my_file">
-  <button type="submit" class="entryButton">Submit</button>
-</form>
-</div>
-
-</br>
-</br>
-<div class="container">
-<div class="centered">
-  <h3>Reset Password</h3>
-  <form method="POST" action="/users/profile?_method=PUT" class="mb-3">
-    <div class="mb-3">
-      <label for="new-password" class="form-label">New Password:</label>
-      <input type="password" name="newPassword" id="new-password" class="form-control" required>
-    </div>
-      <button type="submit">Reset Password</button>
-  </form>
-</div>
-
-<div class="centered">
-  <h3>Reset Timezone</h3>
-  <form method="POST" action="/users/profile?_method=PUT" class="mb-3">
-    <div class="mb-3">
-      <label for="new-timezone" class="form-label">New Timezone:</label>
-      <select name="newTimezone" id="new-timezone" type="timezone" class="form-control" required/>
-      <option value="-5">New York</option>
-      <option value="-6">Chicago</option>
-      <option value="-7">Denver</option>
-      <option value="-8">Los Angeles</option>
-  </select>
-    </div>
-      <button type="submit">Reset Timezone</button>
-  </form>
-</div>
-
-
-  <h3>Commitment</h3>
-  <p> Once you set your commitment you will not be able to modify it.</p>
+<div class="page-wrapper">
   <div class="centered">
-    <form method="POST" action="/users/profile?_method=PUT" onsubmit="submitForm(event)">
+    <% if (message) { %>
+      <p><%= message %></p>
+    <% } %>
+  </div>
+
+  <div class="profile-section">
+    <h3>Templates</h3>
+    <form method="POST" action="/users/profile?_method=PUT">
+      <input type="hidden" name="_method" value="PUT" />
+      <div class="tag-grid">
+        <% for (let i = 0; i < templates.length; i++) { %>
+          <div class="tag-chip">
+            <input type="checkbox" name="userSelectedTemplates" id="template-<%= templates[i] %>" value="<%= templates[i] %>"
+              <% if (selectedTemplates.includes(templates[i])) { %>checked<% } %>
+            >
+            <label for="template-<%= templates[i] %>"><%= templates[i] %></label>
+          </div>
+        <% } %>
+      </div>
+      <button type="submit">Save Templates</button>
+    </form>
+  </div>
+
+  <div class="profile-section">
+    <h3>Avatar</h3>
+    <div class="centered">
+      <img src="<%= user.img ? user.img : "/images/default.png" %>" class="profile-avatar" alt="Profile avatar"/>
+    </div>
+    <form method="POST" action="/users/profile?_method=PUT" class="entryForm">
+      <label class="uploadSpacerTop">Profile Pic:</label>
+      <input type="hidden" role="uploadcare-uploader" data-public-key="fa1bbb7a33229765419d" name="my_file">
+      <button type="submit" class="entryButton">Submit</button>
+    </form>
+  </div>
+
+  <div class="profile-section">
+    <h3>Reset Password</h3>
+    <form method="POST" action="/users/profile?_method=PUT" class="mb-3">
+      <div class="mb-3">
+        <label for="new-password" class="form-label">New Password:</label>
+        <input type="password" name="newPassword" id="new-password" class="form-control" required>
+      </div>
+      <button type="submit">Reset Password</button>
+    </form>
+  </div>
+
+  <div class="profile-section">
+    <h3>Reset Timezone</h3>
+    <form method="POST" action="/users/profile?_method=PUT" class="mb-3">
+      <div class="mb-3">
+        <label for="new-timezone" class="form-label">New Timezone:</label>
+        <select name="newTimezone" id="new-timezone" class="form-control" required>
+          <option value="-5">New York</option>
+          <option value="-6">Chicago</option>
+          <option value="-7">Denver</option>
+          <option value="-8">Los Angeles</option>
+        </select>
+      </div>
+      <button type="submit">Reset Timezone</button>
+    </form>
+  </div>
+
+  <div class="profile-section">
+    <h3>Commitment</h3>
+    <p>Once you set your commitment you will not be able to modify it.</p>
+    <form method="POST" action="/users/profile?_method=PUT">
       <div class="mb-3">
         <label for="motivation" class="form-label">Motivation - Why do you want to journal?</label>
         <input name="motivation" id="motivation" value="<%= user.commitment ? user.commitment.motivation : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
@@ -88,7 +87,6 @@
       <button type="submit">Set Commitment</button>
     </form>
   </div>
-  
-
+</div>
 
 <%- include('../partials/footer.ejs') %>

@@ -1,40 +1,31 @@
 <%- include("../partials/header.ejs")%>
 
-<div class="container">
-<h2 class="centered">Journal Entries</h2>
+<div class="page-wrapper">
+  <h2 class="centered">Journal Entries</h2>
 
-<!--Search contain -->
-<form action="/entries" method="GET">
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <label for="word" class="form-label">Word:</label>
-      <input type="text" for="word" id="word" name="word" class="form-control" placeholder="Word in your entry">
+  <form action="/entries" method="GET">
+    <div class="row g-3">
+      <div class="col-md-6 col-lg-3">
+        <label for="word" class="form-label">Word:</label>
+        <input type="text" id="word" name="word" class="form-control" placeholder="Word in your entry">
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <label for="tag" class="form-label">Tag:</label>
+        <input type="text" id="tag" name="tag" class="form-control" placeholder="Tag in your entry">
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <label for="type" class="form-label">Type:</label>
+        <input type="text" id="type" name="type" class="form-control" placeholder="Template name">
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <label for="date" class="form-label">Date:</label>
+        <input type="date" id="date" name="date" class="form-control" placeholder="Date of your entry">
+      </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <label for="tag" class="form-label">Tag:</label>
-      <input type="text" for="tag" id="tag" name="tag" class="form-control" placeholder="Tag in your entry">
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="type" class="form-label">Type:</label>
-      <input type="type" for="type" id="type" name="type" class="form-control" placeholder="Template name">
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="date" class="form-label">Date:</label>
-      <input type="date" for="date" id="date" name="date" class="form-control" placeholder="Date of your entry">
-    </div>
-  </div>
-  <button type="submit" class="container">Search</button>
-</form>
+    <button type="submit" class="button mt-3">Search</button>
+  </form>
 
-
-
-
-
-
-<!-- Index of journal cards -->
-<div class="container">
-  <div class="card-deck">
-    <% let cardCounter = 0 %>
+  <div class="card-deck mt-4">
     <% for (const entry of entries) {
       const createdAt = new Date(entry.createdAt);
       const options = {
@@ -45,7 +36,6 @@
       const dateString = createdAt.toLocaleDateString('en-US', options);
       const hour = createdAt.getHours();
       const greeting = hour < 12 ? 'Morning' : 'Evening';
-      cardCounter++;
     %>
       <div class="card mb-4">
         <div class="card-header"><a href="/entries/<%= entry.id %>"><%= dateString %> <%= greeting %></a></div>
@@ -53,23 +43,8 @@
           <p class="card-text"><%= entry.content.content1 %></p>
         </div>
       </div>
-      <% if (cardCounter % 0 === 0) { %>
-        </div><div class="card-deck" style="width: 90%;">
-      <% } %>
     <% } %>
   </div>
 </div>
-
-<style>
-  @media (max-width: 576px) {
-    .card-deck {
-      width: 100%;
-    }
-  }
-</style>
-
-
-
-
 
 <%- include("../partials/footer.ejs") %>

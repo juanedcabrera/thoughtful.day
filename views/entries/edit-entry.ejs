@@ -1,12 +1,9 @@
 <%- include("../partials/header.ejs")%>
 
-<!-- This is where the partial for the selected template is being rendered -->
-<% if (selectedTemplate) { %>
-  <%- include(`./templates/edit/${selectedTemplate}.ejs`) %>
-<% } %>
-
-
-
-
+<div class="page-wrapper">
+  <% if (selectedTemplate) { %>
+    <%- include(`./templates/edit/${selectedTemplate}.ejs`) %>
+  <% } %>
+</div>
 
 <%- include("../partials/footer.ejs") %>

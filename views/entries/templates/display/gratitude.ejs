@@ -1,49 +1,50 @@
-<h2 class="centered">Entry on <%= entry.createdAt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour12: true }) %></h2>
-<div class="centered">
-  <!-- Disable the Edit Entry link -->
-  <a href="/entries/<%= entry.id %>/edit" class="disabled" aria-disabled="true">Edit Entry</a>
-</div>
+<div class="entry-form-container">
+  <h2 class="centered">Entry on <%= entry.createdAt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour12: true }) %></h2>
+  <div class="centered">
+    <a href="/entries/<%= entry.id %>/edit" class="btn-link">Edit Entry</a>
+  </div>
 
+  <div class="entry-section">
+    <h1>☀️</h1>
+  </div>
 
+  <div class="mb-3 entry-section">
+    <label for="content1" class="form-label"><h4>I am grateful for:</h4></label>
+    <textarea class="form-control" type="text" id="content1" rows="3" name="content1" required disabled><%= entry.content.content1 %></textarea>
+  </div>
 
-<h1 style="padding: 0 20px;">☀️</h1>
+  <div class="mb-3 entry-section">
+    <label for="content2" class="form-label"><h4>What would make today great?</h4></label>
+    <textarea class="form-control" type="text" id="content2" rows="3" name="content2" required disabled><%= entry.content.content2 %></textarea>
+  </div>
 
-<!-- Add the disabled attribute to make the fields read-only -->
-<div class="mb-3" style="padding: 0 20px;">
-  <label for="exampleFormControlTextarea1" class="form-label"><h4>I am grateful for:</h4></label>
-  <textarea class="form-control" type="text" id="content1" rows="3" name="content1" required disabled><%= entry.content.content1 %></textarea>
-</div>
+  <div class="mb-3 entry-section">
+    <label for="content3" class="form-label"><h4>Positive Affirmation</h4></label>
+    <textarea class="form-control" type="text" id="content3" rows="3" name="content3" required disabled><%= entry.content.content3 %></textarea>
+  </div>
 
-<div class="mb-3" style="padding: 0 20px;">
-  <label for="exampleFormControlTextarea1" class="form-label"><h4>What would make today great?</h4></label>
-  <textarea class="form-control" type="text" id="content2" rows="3" name="content2" required disabled><%= entry.content.content2 %></textarea>
-</div>
+  <div class="entry-section">
+    <h1>☾</h1>
+  </div>
 
-<div class="mb-3" style="padding: 0 20px;">
-  <label for="exampleFormControlTextarea1" class="form-label"><h4>Positive Affirmation</h4></label>
-  <textarea class="form-control" type="text" id="content3" rows="3" name="content3" required disabled><%= entry.content.content3 %></textarea>
-</div>
-
-<h1 style="padding: 0 20px;">☾</h1>
-
-<div class="mb-3" style="padding: 0 20px;">
-    <label for="exampleFormControlTextarea1" class="form-label"><h4>Good things that happened today:</h4></label>
+  <div class="mb-3 entry-section">
+    <label for="content4" class="form-label"><h4>Good things that happened today:</h4></label>
     <textarea class="form-control" type="text" id="content4" rows="3" name="content4" required disabled><%= entry.content.content4 %></textarea>
   </div>
 
-<div class="mb-3" style="padding: 0 20px;">
-    <label for="exampleFormControlTextarea1" class="form-label"><h4>What I learned today:</h4></label>
+  <div class="mb-3 entry-section">
+    <label for="content5" class="form-label"><h4>What I learned today:</h4></label>
     <textarea class="form-control" type="text" id="content5" rows="3" name="content5" required disabled><%= entry.content.content5 %></textarea>
   </div>
 
-
-
-<h4>
-<% if (entry.tags.length) { %>
-    <p>Tags:
-      <% entry.tags.forEach(function(tag) { %>
-        <%= tag.name %>
-      <% }); %>
-    </p>
+  <% if (entry.tags.length) { %>
+    <div class="entry-section">
+      <h4>Tags:</h4>
+      <div class="tag-grid">
+        <% entry.tags.forEach(function(tag) { %>
+          <span class="tag-display"><%= tag.name %></span>
+        <% }); %>
+      </div>
+    </div>
   <% } %>
-</h4>
+</div>

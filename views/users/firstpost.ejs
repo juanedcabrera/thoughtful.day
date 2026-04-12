@@ -1,73 +1,58 @@
 <%- include("../partials/header.ejs") %>
 
-
-
-<div class="centered">
-  <figure>
-    <blockquote class="blockquote">
+<div class="page-wrapper">
+  <div class="entry-form-container">
+    <figure class="quote-card">
       <p>"<%= quotes.quote %>"</p>
-    </blockquote>
-    <figcaption class="blockquote-footer">
-      <p><%= quotes.author %></p>
-    </figcaption>
-  </figure>
-  </div>
-  
-  
-  
-  
-  <form method="POST" action="/entries">
-    <div class="centered">
-    <h1>☀️</h1>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">I am grateful for:</label>
-      <textarea class="form-control" type="text" id="content1" rows="3" name="content1" required></textarea>
-    </div>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">What would make today great?</label>
-      <textarea class="form-control" type="text" id="content2" rows="3" name="content2" required></textarea>
-    </div>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Positive Affirmation</label>
-      <textarea class="form-control" type="text" id="content3" rows="3" name="content3" required></textarea>
-    </div>
-    <h1>☾</h1>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Good things that happened today:</label>
-      <textarea class="form-control" type="text" id="content4" rows="3" name="content4" required></textarea>
-    </div>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">What I learned today:</label>
-      <textarea class="form-control" type="text" id="content5" rows="3" name="content5" required></textarea>
-    </div>
-      <h4>Tags:</h4>
-    </div>
-  
-    <div class="row justify-content-left">
-      <% 
-      // Shuffle the adjectives array
-      for (let i = adjectives.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [adjectives[i], adjectives[j]] = [adjectives[j], adjectives[i]];
-      }
-      
-      // Render the shuffled adjectives array
-      for (const adj of adjectives) { %>
-        <div class="col-md-3 col-sm-6">
-          <input type="checkbox" id="tag-<%= adj.name.toLowerCase() %>" name="tags" value="<%= adj.name.toLowerCase() %>">
-          <label for="tag-<%= adj.name.toLowerCase() %>"><%= adj.name %></label>
-        </div>
-      <% } %>
-    </div>
-    
-        
-    </div>
-  </br>
-  <div class="centered">
-    <button class="button"  type="submit">Save Entry</button>
-    <div class="mb-5"
-    </div>
-  </div>
-    </form>
+      <figcaption><%= quotes.author %></figcaption>
+    </figure>
 
-<%- include("./partials/footer.ejs") %>
+    <form method="POST" action="/entries">
+      <div class="centered">
+        <h1>☀️</h1>
+        <div class="mb-3">
+          <label for="content1" class="form-label">I am grateful for:</label>
+          <textarea class="form-control" type="text" id="content1" rows="3" name="content1" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="content2" class="form-label">What would make today great?</label>
+          <textarea class="form-control" type="text" id="content2" rows="3" name="content2" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="content3" class="form-label">Positive Affirmation</label>
+          <textarea class="form-control" type="text" id="content3" rows="3" name="content3" required></textarea>
+        </div>
+        <h1>☾</h1>
+        <div class="mb-3">
+          <label for="content4" class="form-label">Good things that happened today:</label>
+          <textarea class="form-control" type="text" id="content4" rows="3" name="content4" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="content5" class="form-label">What I learned today:</label>
+          <textarea class="form-control" type="text" id="content5" rows="3" name="content5" required></textarea>
+        </div>
+        <h4>Tags:</h4>
+      </div>
+
+      <div class="tag-grid">
+        <%
+        for (let i = adjectives.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [adjectives[i], adjectives[j]] = [adjectives[j], adjectives[i]];
+        }
+        for (const adj of adjectives) { %>
+          <div class="tag-chip">
+            <input type="checkbox" id="tag-<%= adj.name.toLowerCase() %>" name="tags" value="<%= adj.name.toLowerCase() %>">
+            <label for="tag-<%= adj.name.toLowerCase() %>"><%= adj.name %></label>
+          </div>
+        <% } %>
+      </div>
+
+      <div class="centered">
+        <button class="button" type="submit">Save Entry</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include("../partials/footer.ejs") %>

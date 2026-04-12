@@ -1,86 +1,77 @@
 <%- include("../partials/header.ejs") %>
 
-<h2 class="centered">Welcome <%=user.first_name%></h2>
+<div class="page-wrapper">
+  <h2 class="centered">Welcome <%=user.first_name%></h2>
 
+  <div class="centered">
+    <% if (message) { %>
+      <p><%= message %></p>
+    <% } %>
+  </div>
 
-<div class="centered">
-<% if (message) { %>
-    <p><%= message %></p>
-  <% } %>
-</div>
-
-
-<div class="main-message">
-  <p>Welcome to our journal platform app! We're excited to have you onboard as you embark on a journey of self-discovery and personal growth. Our app is designed to help you capture your thoughts, emotions, and experiences in a user-friendly interface that makes it easy to get started and stay committed to your journaling practice.
+  <div class="main-message">
+    <p>Welcome to our journal platform app! We're excited to have you onboard as you embark on a journey of self-discovery and personal growth. Our app is designed to help you capture your thoughts, emotions, and experiences in a user-friendly interface that makes it easy to get started and stay committed to your journaling practice.</p>
     <p>3 interesting facts:</p>
-  
-   <p>Journaling has been shown to reduce stress and anxiety levels, with one study finding that just 20 minutes of journaling per day for four consecutive days can significantly decrease symptoms of anxiety and depression.</p>
-  
-   <p>Journaling can improve your memory and cognitive functioning, with research suggesting that the act of writing down your thoughts and experiences can help you better process and retain information.</p>
-  
-   <p>Journaling can boost your creativity and problem-solving skills, as it allows you to explore different perspectives and solutions to challenges in a safe and non-judgmental space.</p>
-</div>
+    <p>Journaling has been shown to reduce stress and anxiety levels, with one study finding that just 20 minutes of journaling per day for four consecutive days can significantly decrease symptoms of anxiety and depression.</p>
+    <p>Journaling can improve your memory and cognitive functioning, with research suggesting that the act of writing down your thoughts and experiences can help you better process and retain information.</p>
+    <p>Journaling can boost your creativity and problem-solving skills, as it allows you to explore different perspectives and solutions to challenges in a safe and non-judgmental space.</p>
+  </div>
 
-<!-- CALENDAR -->
-
-<% let entries = {} %>
-<% if(allEntries && allEntries.length === 0) {
-   } else {
-     for(let entry of allEntries) {
-       let entryDate = new Date(entry.createdAt).toLocaleDateString()
-       entries[entryDate] = true
+  <% let entries = {} %>
+  <% if(allEntries && allEntries.length === 0) {
+     } else {
+       for(let entry of allEntries) {
+         let entryDate = new Date(entry.createdAt).toLocaleDateString()
+         entries[entryDate] = true
+       }
      }
-   }
-%>
+  %>
 
+  <div class="calendar">
+    <div class="calendar-header">
+      <div class="calendar-month">
+        <%= new Date(year, month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) %>
+      </div>
+    </div>
+    <div class="calendar-weekdays">
+      <div class="calendar-weekday">Sun</div>
+      <div class="calendar-weekday">Mon</div>
+      <div class="calendar-weekday">Tue</div>
+      <div class="calendar-weekday">Wed</div>
+      <div class="calendar-weekday">Thu</div>
+      <div class="calendar-weekday">Fri</div>
+      <div class="calendar-weekday">Sat</div>
+    </div>
 
-<div class="calendar">
-  <div class="calendar-header">
-    <div class="calendar-month">
-      <%= new Date(year, month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) %>
+    <div class="calendar-body">
+      <% let thisIsDaysInMonth = new Date(year, month + 1, 0).getDate() %>
+      <% let dayOfWeek = new Date(year, month, 1).getDay() %>
+      <% for(let i=1; i<=dayOfWeek; i++) { %>
+        <div class="calendar-date"></div>
+      <% } %>
+      <% for(let i=1; i<=thisIsDaysInMonth; i++) {
+        let indexDate = new Date(year, month, i).toLocaleDateString()
+        let highlightClass = entries[indexDate] ? 'highlight' : ''
+        let dayOfWeek = new Date(year, month, i).getDay()
+        let isWeekend = dayOfWeek === 0 || dayOfWeek === 6
+        let dateLink = new Date(year, month, i).toISOString().slice(0, 10);
+      %>
+        <% if(entries[indexDate]) { %>
+          <a href="/entries?wprd=&tag=&type=&date=<%= dateLink %>" class="calendar-date <%= highlightClass %> <%= isWeekend ? 'weekend' : '' %>">
+            <%= i %>
+          </a>
+        <% } else { %>
+          <div class="calendar-date <%= highlightClass %> <%= isWeekend ? 'weekend' : '' %>">
+            <%= i %>
+          </div>
+        <% } %>
+      <% } %>
+      <% let daysInMonth = new Date(year, month, 0).getDate() %>
+      <% for(let i=dayOfWeek+daysInMonth; i<42; i++) { %>
+        <div class="calendar-date"></div>
+      <% } %>
     </div>
   </div>
-  <div class="calendar-weekdays">
-    <div class="calendar-weekday">Sun</div>
-    <div class="calendar-weekday">Mon</div>
-    <div class="calendar-weekday">Tue</div>
-    <div class="calendar-weekday">Wed</div>
-    <div class="calendar-weekday">Thu</div>
-    <div class="calendar-weekday">Fri</div>
-    <div class="calendar-weekday">Sat</div>
-  </div>
-  
-  <div class="calendar-body">
-    <% let thisIsDaysInMonth = new Date(year, month + 1, 0).getDate() %>
-    <% let dayOfWeek = new Date(year, month, 1).getDay() %>
-    <% for(let i=1; i<=dayOfWeek; i++) { %>
-      <div class="calendar-date"></div>
-    <% } %>
-    <% for(let i=1; i<=thisIsDaysInMonth; i++) {
-      let indexDate = new Date(year, month, i).toLocaleDateString()
-      let highlightClass = entries[indexDate] ? 'highlight' : ''
-      let dayOfWeek = new Date(year, month, i).getDay()
-      let isWeekend = dayOfWeek === 0 || dayOfWeek === 6
-      let dateLink = new Date(year, month, i).toISOString().slice(0, 10);
-    %>
-      <% if(entries[indexDate]) { %>
-        <a href="/entries?wprd=&tag=&type=&date=<%= dateLink %>" class="calendar-date <%= highlightClass %> <%= isWeekend ? 'weekend' : '' %>">
-          <%= i %>
-        </a>
-      <% } else { %>
-        <div class="calendar-date <%= highlightClass %> <%= isWeekend ? 'weekend' : '' %>">
-          <%= i %>
-        </div>
-      <% } %>
-    <% } %>
-    <% let daysInMonth = new Date(year, month, 0).getDate() %>
-    <% for(let i=dayOfWeek+daysInMonth; i<42; i++) { %>
-      <div class="calendar-date"></div>
-    <% } %>
-  </div>
 </div>
-
-
-
 
 <%- include("../partials/footer.ejs") %>

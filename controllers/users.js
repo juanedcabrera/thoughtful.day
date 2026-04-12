@@ -4,7 +4,6 @@ const router = express.Router();
 const db = require("../models");
 const bcrypt = require("bcrypt");
 const cryptoJs = require("crypto-js");
-const uploadcareWidget = require("uploadcare-widget");
 const methodOverride = require("method-override");
 
 // GET /users/new -- show route for a form that creates a new user (sign up for the app)
@@ -76,7 +75,7 @@ router.post("/", async (req, res) => {
       // console.log("user account exists");
       // instead redirect them to the log in page
       res.redirect(
-        "/users/login?message=Please login to your account to continue 🙈"
+        `/users/login?message=${encodeURIComponent("Please login to your account to continue 🙈")}`
       );
     } else {
       // encypt the logged in user's id
@@ -85,7 +84,10 @@ router.post("/", async (req, res) => {
         process.env.ENC_KEY
       );
       // set encrypted id as a cookie
-      res.cookie("userId", encryptedPk.toString());
+      res.cookie("userId", encryptedPk.toString(), {
+        httpOnly: true,
+        sameSite: 'lax',
+      });
       // redirect user
       res.redirect("/users/main");
     }
@@ -108,11 +110,11 @@ router.post("/login", async (req, res) => {
     if (!foundUser) {
       // if the user's email is not found -- do not let them login
       console.log("user not found");
-      res.redirect("/users/login?message=" + failedLoginMessage);
+      res.redirect("/users/login?message=" + encodeURIComponent(failedLoginMessage));
     } else if (!bcrypt.compareSync(req.body.password, foundUser.password)) {
       console.log("incorrect password");
       // if the user exists but they have the wrong password -- do not let them login
-      res.redirect("/users/login?message=" + failedLoginMessage);
+      res.redirect("/users/login?message=" + encodeURIComponent(failedLoginMessage));
     } else {
       // if the user exists, they know the right password -- log them in
       const encryptedPk = cryptoJs.AES.encrypt(
@@ -120,7 +122,10 @@ router.post("/login", async (req, res) => {
         process.env.ENC_KEY
       );
       // set encrypted id as a cookie
-      res.cookie("userId", encryptedPk.toString());
+      res.cookie("userId", encryptedPk.toString(), {
+        httpOnly: true,
+        sameSite: 'lax',
+      });
       // redirect user
       res.redirect("/users/main");
     }
@@ -145,7 +150,7 @@ router.get("/main", async (req, res) => {
     if (!encryptedPk) {
       // if the cookie is not present, redirect the user to the login page
       res.redirect(
-        "/users/login?message=You are not authorized to view that page. Please authenticate to continue 😎"
+        `/users/login?message=${encodeURIComponent("You are not authorized to view that page. Please authenticate to continue 😎")}`
       );
       return;
     }
@@ -160,7 +165,7 @@ router.get("/main", async (req, res) => {
     if (!user) {
       // if the user is not found in the database, redirect to the login page
       res.redirect(
-        "/users/login?message=You are not authorized to view that page. Please authenticate to continue 😎"
+        `/users/login?message=${encodeURIComponent("You are not authorized to view that page. Please authenticate to continue 😎")}`
       );
       return;
     }
@@ -277,7 +282,7 @@ router.put("/profile", async (req, res) => {
     
     
 
-res.redirect(`/users/profile?message=${message}`);
+res.redirect(`/users/profile?message=${encodeURIComponent(message)}`);
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");

@@ -1,83 +1,66 @@
 <%- include("../partials/header.ejs") %>
 
+<div class="page-wrapper">
+  <div class="auth-card">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="fs-4 card-title fw-bold mb-4">Sign Up</h1>
+        <form method="POST" action="/users" autocomplete="off">
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="first_name">First Name</label>
+            <input id="first_name" type="text" class="form-control" name="first_name" value="" required>
+            <div class="invalid-feedback">
+              First name is required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="last_name">Last Name</label>
+            <input id="last_name" type="text" class="form-control" name="last_name" value="" required>
+            <div class="invalid-feedback">
+              Last name is required
+            </div>
+          </div>
 
-<div class="centered">
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="timezone">Timezone:</label>
+            <select name="timezone" id="timezone" class="form-control" required>
+              <option value="-5">New York</option>
+              <option value="-6">Chicago</option>
+              <option value="-7">Denver</option>
+              <option value="-8">Los Angeles</option>
+            </select>
+          </div>
 
-  <section class="h-100">
-		<div class="container h-100">
-				<div class="col-xl-7 col-xxl-8 col-md-11 col-sm-12 w-100">
-					<div class="card shadow-lg">
-						<div class="card-body p-5">
-							<h1 class="fs-4 card-title fw-bold mb-4">Sign Up</h1>
-							<form method="POST" action="/users" autocomplete="off">
-								<div class="mb-3">
-									<label class="mb-2 text-muted" for="first_name">First Name</label>
-									<input id="first_name" type="first_name" class="form-control" name="first_name" value="" required>
-									<div class="invalid-feedback">
-										First name is required	
-									</div>
-								</div>
-                <div class="mb-3">
-									<label class="mb-2 text-muted" for="last_name">Last Name</label>
-									<input id="last_name" type="last_name" class="form-control" name="last_name" value="" required>
-									<div class="invalid-feedback">
-										Last name is required	
-									</div>
-								</div>
-								
-								<div class="mb-3">
-									<label class="mb-2 text-muted" for="timezone">Timezone:</label>
-									<select name="timezone" id="timezone" type="timezone" requirec/>
-										<option value="-5">New York</option>
-										<option value="-6">Chicago</option>
-										<option value="-7">Denver</option>
-										<option value="-8">Los Angeles</option>
-								</select>
-								</div>
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="email">E-Mail Address</label>
+            <input id="email" type="email" class="form-control" name="email" value="" required/>
+            <div class="invalid-feedback">
+              Email is invalid
+            </div>
+          </div>
 
-								<div class="mb-3">
-									<label class="mb-2 text-muted" for="email">E-Mail Address</label>
-									<input id="email" type="email" class="form-control" name="email" value="" required/>
-									<div class="invalid-feedback">
-										Email is invalid
-									</div>
-								</div>
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="password">Password</label>
+            <input id="password" type="password" class="form-control" name="password" required/>
+            <div class="invalid-feedback">
+              Password is required
+            </div>
+          </div>
 
-								<div class="mb-3">
-									<label class="mb-2 text-muted" for="password">Password</label>
-									<input id="password" type="password" class="form-control" name="password" required/>
-								    <div class="invalid-feedback">
-								    	Password is required
-							    	</div>
-								</div>
+          <button class="button" type="submit">Register</button>
+        </form>
+      </div>
+      <div class="card-footer py-3 border-0">
+        <div class="text-center">
+          Already have an account? <a href="/users/login">Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-								<div class="centered-button">
-									<div class="d-flex">
-										<button class="button" type="submit">
-											Register
-										  </button>
-									</div>
-								  </div>
-							</form>
-						</div>
-						<div class="card-footer py-3 border-0">
-							<div class="text-center">
-								Already have an account? <a href="/users/login" class="text-dark">Login</a>
-							</div>
-						</div>
-					</div>
-					<div class="text-center mt-5 text-muted">
-						Copyright &copy; 2023 &mdash; Thoughtful.day
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<script>
-		// Set timezone value to hidden field
-		document.getElementById("timezone").value = Intl.DateTimeFormat().resolvedOptions().timeZone;
-	  </script>
-	<script src="js/login.js"></script>
+<script>
+  document.getElementById("timezone").value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+</script>
 
 <%- include('../partials/footer.ejs') %>

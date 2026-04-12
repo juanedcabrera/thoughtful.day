@@ -5,12 +5,27 @@ const cookieParser = require('cookie-parser')
 const cryptoJs = require('crypto-js')
 const db = require('./models')
 const methodOverride = require('method-override');
+const helmet = require('helmet');
 
 
 
 // app config
 const app = express()
 const PORT = process.env.PORT || 8000
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://ucarecdn.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com", "https://vjs.zencdn.net"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https://ucarecdn.com"],
+      connectSrc: ["'self'", "https://upload.uploadcare.com"],
+      mediaSrc: ["'self'"],
+      frameSrc: ["'self'", "https://ucarecdn.com"],
+    },
+  },
+}));
 app.set('view engine', 'ejs')
 app.use(express.static('public/'))
 app.use(methodOverride('_method'))
@@ -51,6 +66,7 @@ app.use(async (req, res, next) => {
         // if something goes wrong
         // return an unauthorized error
         res.locals.user = null
+        next()
     }
 })
 

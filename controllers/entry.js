@@ -9,6 +9,8 @@ const fs = require("fs");
 const ejs = require("ejs");
 const { userInfo } = require("os");
 
+const VALID_TEMPLATES = ['freeform', 'gratitude', 'accomplishment'];
+
 // GET /entries -- INDEX route to show all the entries
 router.get("/", async (req, res) => {
   try {
@@ -90,7 +92,11 @@ router.get("/new", async (req, res) => {
 
   // Check if the form was submitted
   if (req.query.userSelectedTemplates) {
-    let selectedTemplate = req.query.userSelectedTemplates; 
+    let selectedTemplate = req.query.userSelectedTemplates;
+
+    if (!VALID_TEMPLATES.includes(selectedTemplate)) {
+      return res.redirect('/entries/new');
+    }
 
     // Render template partial
     console.log(`Selected Template: ${selectedTemplate}`);
@@ -155,6 +161,10 @@ router.post("/", async (req, res) => {
     };
     let tags = req.body.tags; // had to change to let for tags to work
     const selectedTemplate = req.body.selectedTemplate
+
+    if (!VALID_TEMPLATES.includes(selectedTemplate)) {
+      return res.redirect('/entries/new');
+    }
 
     const decryptedPk = cryptoJs.AES.decrypt(
       req.cookies.userId,
@@ -237,6 +247,9 @@ router.get("/:id", async (req, res) => {
       ],
     });
     let selectedTemplate = foundEntry[0].type
+    if (!VALID_TEMPLATES.includes(selectedTemplate)) {
+      selectedTemplate = 'freeform';
+    }
     if (!foundEntry.length) {
       // Entry not found redirect to index
       return res.redirect("/entries?message=Entry not found");
@@ -271,6 +284,9 @@ router.get("/:id/edit", async (req, res) => {
       },
     });
     let selectedTemplate = foundEntry[0].type
+    if (!VALID_TEMPLATES.includes(selectedTemplate)) {
+      selectedTemplate = 'freeform';
+    }
     // Render the edit form with the entry data
     // console.log(adjectives);
     res.render("entries/edit-entry", { 

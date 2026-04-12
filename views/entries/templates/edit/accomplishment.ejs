@@ -1,48 +1,45 @@
-
-<h2 class="centered">Entry on <%= entry.createdAt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour12: true }) %></h2>
-<div class="centered">
-  <h2 class="centered">Edit Entry</h2>
+<div class="entry-form-container">
+  <h2 class="centered">Entry on <%= entry.createdAt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour12: true }) %></h2>
+  <div class="centered">
+    <h2 class="centered">Edit Entry</h2>
+  </div>
 
   <form method="POST" action="/entries/<%= entry.id %>?_method=PUT">
 
-  <div class="centered">
-  <h1>📝</h1>
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">What did I accomplish?</label>
-    <textarea class="form-control" type="text" id="content1" rows="3" name="content1" required maxlength="2100" ><%= entry.content.content1 %></textarea>
-  </div>
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">What is the impact that this item had for me and/or my team?</label>
-    <textarea class="form-control" type="text" id="content2" rows="3" name="content2" required maxlength="2100" ><%= entry.content.content2 %></textarea>
-  </div>
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">What is the impact that this item had on the organization?</label>
-    <textarea class="form-control" type="text" id="content3" rows="3" name="content3" required maxlength="2100" ><%= entry.content.content3 %></textarea>
-  </div>
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">Who helped you in achieving this accomplishment?</label>
-    <textarea class="form-control" type="text" id="content4" rows="3" name="content4" required maxlength="2100" ><%= entry.content.content4 %></textarea>
-  </div>
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">What did you learn?</label>
-    <textarea class="form-control" type="text" id="content5" rows="3" name="content5" required maxlength="2100" ><%= entry.content.content5 %></textarea>
-  </div>
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">How will you take this further?</label>
-    <textarea class="form-control" type="text" id="content6" rows="3" name="content6" required maxlength="2100" ><%= entry.content.content6 %></textarea>
-  </div>
+    <div class="centered">
+      <h1>📝</h1>
+      <div class="mb-3">
+        <label for="content1" class="form-label">What did I accomplish?</label>
+        <textarea class="form-control" type="text" id="content1" rows="3" name="content1" required maxlength="2100"><%= entry.content.content1 %></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="content2" class="form-label">What is the impact that this item had for me and/or my team?</label>
+        <textarea class="form-control" type="text" id="content2" rows="3" name="content2" required maxlength="2100"><%= entry.content.content2 %></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="content3" class="form-label">What is the impact that this item had on the organization?</label>
+        <textarea class="form-control" type="text" id="content3" rows="3" name="content3" required maxlength="2100"><%= entry.content.content3 %></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="content4" class="form-label">Who helped you in achieving this accomplishment?</label>
+        <textarea class="form-control" type="text" id="content4" rows="3" name="content4" required maxlength="2100"><%= entry.content.content4 %></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="content5" class="form-label">What did you learn?</label>
+        <textarea class="form-control" type="text" id="content5" rows="3" name="content5" required maxlength="2100"><%= entry.content.content5 %></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="content6" class="form-label">How will you take this further?</label>
+        <textarea class="form-control" type="text" id="content6" rows="3" name="content6" required maxlength="2100"><%= entry.content.content6 %></textarea>
+      </div>
+    </div>
 
-
-  <div class="centered">
-    <button class="button" type="submit">Save Changes</button>
+    <div class="entry-actions centered">
+      <button class="button" type="submit">Save Changes</button>
   </form>
-  </br>
-  </br>
   <form method="POST" action="/entries/<%= entry.id %>?_method=DELETE">
-    <button class="button" type="submit">Delete</button>
-    <input type="hidden" name="_method" value="DELETE">
+      <button class="btn-destructive" type="submit">Delete</button>
+      <input type="hidden" name="_method" value="DELETE">
   </form>
-  </div>
-
-
-
+    </div>
+</div>

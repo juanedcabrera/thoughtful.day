@@ -1,29 +1,29 @@
 <%- include("../partials/header.ejs") %>
 
-
-<h3>Commitment</h3>
-<p> Once you set your commitment you will not be able to modify it.</p>
-<div class="centered">
-  <form method="POST" action="/users/profile?_method=PUT" onsubmit="submitForm(event)">
-    <div class="mb-3">
-      <label for="motivation" class="form-label">Motivation - Why do you want to journal?</label>
-      <input name="motivation" id="motivation" value="<%= user.commitment ? user.commitment.motivation : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label for="reward" class="form-label">Reward - What will you give yourself if you meet a journaling goal?</label>
-      <input name="reward" id="reward" value="<%= user.commitment ? user.commitment.reward : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label for="deterrent" class="form-label">Deterrent - What will you give up if you fail to meet that goal?</label>
-      <input name="deterrent" id="deterrent" value="<%= user.commitment ? user.commitment.deterrent : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label for="signature" class="form-label">Signature</label>
-      <input name="signature" id="signature" value="<%= user.commitment ? user.commitment.signature : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
-    </div>
-    <button type="submit">Set Commitment</button>
-  </form>
+<div class="page-wrapper">
+  <div class="entry-form-container">
+    <h3>Commitment</h3>
+    <p>Once you set your commitment you will not be able to modify it.</p>
+    <form method="POST" action="/users/profile?_method=PUT">
+      <div class="mb-3">
+        <label for="motivation" class="form-label">Motivation - Why do you want to journal?</label>
+        <input name="motivation" id="motivation" value="<%= user.commitment ? user.commitment.motivation : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="reward" class="form-label">Reward - What will you give yourself if you meet a journaling goal?</label>
+        <input name="reward" id="reward" value="<%= user.commitment ? user.commitment.reward : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="deterrent" class="form-label">Deterrent - What will you give up if you fail to meet that goal?</label>
+        <input name="deterrent" id="deterrent" value="<%= user.commitment ? user.commitment.deterrent : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="signature" class="form-label">Signature</label>
+        <input name="signature" id="signature" value="<%= user.commitment ? user.commitment.signature : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
+      </div>
+      <button type="submit">Set Commitment</button>
+    </form>
+  </div>
 </div>
 
-
-<%- include("./partials/footer.ejs") %>
+<%- include("../partials/footer.ejs") %>
